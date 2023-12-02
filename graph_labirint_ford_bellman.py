@@ -26,7 +26,7 @@ def main():
     has_achievable_cycle = False
     while True:
         i += 1
-        if i > 2000:
+        if i > N:
             for changing_v in changing_vertices:
                 if dfs_find_cycle(N - 1, changing_v, adj, used):
                     has_achievable_cycle = True
