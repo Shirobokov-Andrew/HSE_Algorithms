@@ -28,8 +28,7 @@ def main():
         i += 1
         if i > N:
             for changing_v in changing_vertices:
-                if dfs_find_cycle(N - 1, changing_v, adj, used):
-                    has_achievable_cycle = True
+                if has_achievable_cycle := dfs_find_cycle(N - 1, changing_v, adj, used):
                     break
             break
         changing_vertices = []
