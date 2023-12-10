@@ -3,11 +3,12 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 
-def dfs_find_cycle(start, end, adj, used):
+def dfs_find_cycle(start, end, adj, used, flag):
     used[start] = True
     for v, _ in adj[start]:
         if not used[v]:
-            dfs_find_cycle(v, end, adj, used)
+            if dfs_find_cycle(v, end, adj, used, flag):
+                return True
         if v == end:
             return True
     return False
@@ -22,13 +23,14 @@ def main():
     used = [False for _ in range(N)]
     dist = [float('-inf') for _ in range(N)]
     dist[0] = 0
-    i = 0
+    s = 0
     has_achievable_cycle = False
+    flag = False
     while True:
-        i += 1
-        if i > N:
+        s += 1
+        if s > N:
             for changing_v in changing_vertices:
-                if has_achievable_cycle := dfs_find_cycle(N - 1, changing_v, adj, used):
+                if has_achievable_cycle := dfs_find_cycle(N - 1, changing_v, adj, used, flag):
                     break
             break
         changing_vertices = []
