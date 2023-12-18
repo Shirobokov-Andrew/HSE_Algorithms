@@ -25,22 +25,18 @@ def main():
     for _ in range(k):
         x, y = map(int, input().split())
         banned_vertices.append((x - 1) * m + (y - 1))
-    used = [False for _ in range(n * m)]
-    banned = set(banned_vertices)
-    if dfs(0, adj, used, banned):
+    l = -1
+    r = k + 1
+    while r - l > 1:
+        median = (l + r) // 2
+        if dfs(0, adj, [False for _ in range(n * m)], set(banned_vertices[:median])):
+            l = median
+        else:
+            r = median
+    if r == k + 1:
         print(-1)
     else:
-        l = 0
-        r = k
-        while r - l > 1:
-            used = [False for _ in range(n * m)]
-            median = (l + r) // 2
-            banned = set(banned_vertices[0:median])
-            if dfs(0, adj, used, banned):
-                l = median
-            else:
-                r = median
-        print(l + 1)
+        print(r)
 
 
 if __name__ == '__main__':
